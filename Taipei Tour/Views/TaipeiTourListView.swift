@@ -10,25 +10,29 @@ import SwiftUI
 
 
 struct TaipeiTourListView: View {
-
+    
     let dataBank = ["Coding", "Buy Milk", "Go to school"]
     @State var places: Places?
-
+    
     var body: some View {
-        List{
-            if let data = places?.data {
-                ForEach(data.indices, id: \.self) { index in
-                    ListCellView(data: data[index].name)
+        NavigationView {
+            List{
+                if let data = places?.data {
+                    ForEach(data.indices, id: \.self) { index in
+                        ListCellView(place: data[index])
+                    }
                 }
             }
-//            ForEach(dataBank, id: \.self) { data in
-//                ListCellView(data: data)
-//            }
-        }.onAppear(perform: self.loadData)
+            .onAppear(perform: self.loadData)
+            .navigationTitle("Taipei Tour")
+        }
+        
+        
+        
     }
     
     func loadData(){
-        let urlString = "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=1"
+        let urlString = "https://www.travel.taipei/open-api/zh-tw/Attractions/All?categoryIds=12&page=1"
         
         guard let url = URL(string: urlString) else{
             print("illegle url")
@@ -52,15 +56,13 @@ struct TaipeiTourListView: View {
                 let places = try JSONDecoder().decode(Places.self, from: data)
                 DispatchQueue.main.async {
                     self.places = places
-                    print(places.data[0].name)
                 }
             }
             catch let error{
                 print(error.localizedDescription)
             }
-        
+            
         }.resume()
-        
     }
     
     
@@ -71,7 +73,12 @@ struct Places: Codable{
     struct Place: Codable{
         var name: String
         var introduction: String
+        var address: String
         var tel: String
+        var images: [image]
+        struct image: Codable{
+            var src: String
+        }
     }
 }
 
@@ -85,20 +92,28 @@ struct TaipeiTourListView_Previews: PreviewProvider {
 
 struct ListCellView: View {
     
-    var data: String
+    var place: Places.Place
     
     var body: some View {
-        HStack {
-            Image(systemName: "circle.fill")
-                .resizable()
-                .frame(width: 20, height: 20)
+        HStack(alignment: .top, spacing: 20) {
+            
+            let url = place.images[0].src
+            AsyncImage(url: URL(string: url)) { image in
+                image
+                    .resizable()
+                    .frame(width: 120, height: 120)
+                    .cornerRadius(20)
+            } placeholder: {
+                Image(systemName: "icloud.slash")
+            }
             VStack(alignment: .leading) {
-                Text(data)
+                Text(place.name)
                     .font(.system(.title2))
-                Text(data)
+                Text(place.address)
                     .foregroundColor(.gray)
-                Text("Tel: 0900123321")
+                Text(place.tel)
                     .foregroundColor(.gray)
+                
             }
         }
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B740D693288F944000C26FCD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = B740D692288F944000C26FCD /* Place.swift */; };
 		B7D845A6288F7C6D00223714 /* Taipei_TourApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D845A5288F7C6D00223714 /* Taipei_TourApp.swift */; };
 		B7D845A8288F7C6D00223714 /* TaipeiTourListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D845A7288F7C6D00223714 /* TaipeiTourListView.swift */; };
 		B7D845AA288F7C7000223714 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7D845A9288F7C7000223714 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 
 /* Begin PBXFileReference section */
 		B740D690288F86D500C26FCD /* Taipei-Tour-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Taipei-Tour-Info.plist"; sourceTree = SOURCE_ROOT; };
+		B740D692288F944000C26FCD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		B7D845A2288F7C6D00223714 /* Taipei Tour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Tour.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7D845A5288F7C6D00223714 /* Taipei_TourApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taipei_TourApp.swift; sourceTree = "<group>"; };
 		B7D845A7288F7C6D00223714 /* TaipeiTourListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaipeiTourListView.swift; sourceTree = "<group>"; };
@@ -33,6 +35,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B740D691288F93FC00C26FCD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B740D692288F944000C26FCD /* Place.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B7D84599288F7C6D00223714 = {
 			isa = PBXGroup;
 			children = (
@@ -52,9 +62,10 @@
 		B7D845A4288F7C6D00223714 /* Taipei Tour */ = {
 			isa = PBXGroup;
 			children = (
+				B740D691288F93FC00C26FCD /* Model */,
+				B7D845B4288F7CEF00223714 /* Views */,
 				B740D690288F86D500C26FCD /* Taipei-Tour-Info.plist */,
 				B7D845B3288F7CE000223714 /* App */,
-				B7D845B4288F7CEF00223714 /* Views */,
 				B7D845A9288F7C7000223714 /* Assets.xcassets */,
 				B7D845AB288F7C7000223714 /* Preview Content */,
 			);
@@ -155,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B740D693288F944000C26FCD /* Place.swift in Sources */,
 				B7D845A8288F7C6D00223714 /* TaipeiTourListView.swift in Sources */,
 				B7D845A6288F7C6D00223714 /* Taipei_TourApp.swift in Sources */,
 			);
