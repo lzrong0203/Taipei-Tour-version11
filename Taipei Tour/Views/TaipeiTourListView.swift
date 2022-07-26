@@ -12,12 +12,13 @@ import SwiftUI
 struct TaipeiTourListView: View {
     
     let dataBank = ["Coding", "Buy Milk", "Go to school"]
-    @State var places: Places?
+//    @State var places: Places?
+    @State var tourPlaces: [Place] = []
     
     var body: some View {
         NavigationView {
             List{
-                if let data = places?.data {
+                if let data = tourPlaces {
                     ForEach(data.indices, id: \.self) { index in
                         ListCellView(place: data[index])
                     }
@@ -32,7 +33,7 @@ struct TaipeiTourListView: View {
     }
     
     func loadData(){
-        let urlString = "https://www.travel.taipei/open-api/zh-tw/Attractions/All?categoryIds=12&page=1"
+        let urlString = "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=1"
         
         guard let url = URL(string: urlString) else{
             print("illegle url")
@@ -51,11 +52,19 @@ struct TaipeiTourListView: View {
             guard let data = data else {
                 return
             }
-            print(data)
+//            print(data)
             do{
                 let places = try JSONDecoder().decode(Places.self, from: data)
                 DispatchQueue.main.async {
-                    self.places = places
+                    
+                    for p in places.data{
+                        if let image = p.images.first?.src{
+                            self.tourPlaces.append(Place(name:p.name, introduction: p.introduction, tel: p.tel, image: image, address:p.address, isFavor: false))
+                        }else{
+                            self.tourPlaces.append(Place(name:p.name, introduction: p.introduction, tel: p.tel, image: "", address:p.address, isFavor: false))
+                        }
+                    }
+                    
                 }
             }
             catch let error{
@@ -84,27 +93,28 @@ struct Places: Codable{
 
 struct TaipeiTourListView_Previews: PreviewProvider {
     static var previews: some View {
-        
+
+//        let example = [Place(name: "Test", introduction: "Test", tel: "Test", image: "", address: "", isFavor: false)]
         TaipeiTourListView()
-        
+
     }
 }
 
 struct ListCellView: View {
     
-    var place: Places.Place
+    var place: Place
     
     var body: some View {
         HStack(alignment: .top, spacing: 20) {
             
-            let url = place.images[0].src
+            let url = place.image
             AsyncImage(url: URL(string: url)) { image in
                 image
                     .resizable()
                     .frame(width: 120, height: 120)
                     .cornerRadius(20)
             } placeholder: {
-                Image(systemName: "icloud.slash")
+                ProgressView()
             }
             VStack(alignment: .leading) {
                 Text(place.name)
